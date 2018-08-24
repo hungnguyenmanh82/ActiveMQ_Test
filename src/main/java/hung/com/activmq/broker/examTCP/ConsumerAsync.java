@@ -55,7 +55,9 @@ public class ConsumerAsync implements Runnable, ExceptionListener {
 
 			//QueueName giống như ID để giao tiếp giữa Consumer và Producer thì phải.
 			//Queue này ở Consumer để lưu message nhận đc từ Broker (ko phải ở broker).
+			// Create the destination (Topic or Queue)
 			Destination destination = session.createQueue("TEST.FOO");
+//			session.createTopic(topicName)
 
 			//========================================================================end
 			// Create a MessageConsumer from the Session to the Topic or Queue
