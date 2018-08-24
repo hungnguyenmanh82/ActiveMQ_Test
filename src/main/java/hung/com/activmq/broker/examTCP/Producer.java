@@ -9,6 +9,13 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+/**
+ * Consumer = receiver: bên nhận event.
+ * producer = sender: bên gửi
+ * asynchronous event on the only thread by ActiveMQ
+ * 
+ * @Runnable:  dùng để chạy function này trên worker thread thôi
+ */
 public class Producer implements Runnable {
     public void run() {
         try {
@@ -23,6 +30,9 @@ public class Producer implements Runnable {
     		 *  tcp://hostname:port?key=value
     		 *  vd:  tcp://localhost:61616?transport.threadName&transport.trace=false&transport.soTimeout=60000
     		 */
+        	// User/pass ko có ở thiết lập Broker server
+        	// bản chất nó là ID để đăng ký nhận message từ Consumer(Subscriber)
+        	// Consumer và Producer phải chung user/pass thì mới gửi nhận message cho nhau đc.
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:1000");
             connectionFactory.setUserName("admin");
             connectionFactory.setPassword("admin");
@@ -34,7 +44,8 @@ public class Producer implements Runnable {
             // Create a Session
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Create the destination (Topic or Queue)
+            //QueueName giống như ID để giao tiếp giữa Consumer và Producer thì phải.
+			//Queue này ở Producer để send Message tới Broker (ko phải ở broker).
             Destination destination = session.createQueue("TEST.FOO");
             
             //========================================================================end
@@ -49,6 +60,8 @@ public class Producer implements Runnable {
             // Create a messages
             String text = "Hello world! From: " + Thread.currentThread().getName() + " : " + this.hashCode();
             TextMessage message = session.createTextMessage(text);
+//            message.setJMSMessageID(id);
+//            message.setJMSPriority(priority);
 
             // Tell the producer to send the message
             System.out.println("<= Sent message: "+ message.hashCode() + " : " + Thread.currentThread().getName());

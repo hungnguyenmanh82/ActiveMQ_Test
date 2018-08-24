@@ -37,6 +37,9 @@ public class ConsumerAsync implements Runnable, ExceptionListener {
 			 *  tcp://hostname:port?key=value
 			 *  vd:  tcp://localhost:61616?transport.threadName&transport.trace=false&transport.soTimeout=60000
 			 */
+        	// User/pass ko có ở thiết lập Broker server
+        	// bản chất nó là ID để nhận message từ Producer(or Publisher)
+			// Consumer và Producer phải chung user/pass thì mới gửi nhận message cho nhau đc.
 			ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:1000");
 			connectionFactory.setUserName("admin");
 			connectionFactory.setPassword("admin");
@@ -46,10 +49,12 @@ public class ConsumerAsync implements Runnable, ExceptionListener {
 
 			connection.setExceptionListener(this);  //server
 
-			// Create a Session
+			// Session là 1 Runable là 1 thread. Để lấy message từ Queue gửi qua Socket connection.
+			// 1 Connection có thể có nhiều Session hay nhiều Thread để lấy message từ Queue tương ứng gửi đi.
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-			// Create the destination (Topic or Queue)
+			//QueueName giống như ID để giao tiếp giữa Consumer và Producer thì phải.
+			//Queue này ở Consumer để lưu message nhận đc từ Broker (ko phải ở broker).
 			Destination destination = session.createQueue("TEST.FOO");
 
 			//========================================================================end
@@ -60,7 +65,12 @@ public class ConsumerAsync implements Runnable, ExceptionListener {
 			consumer.setMessageListener(new MessageListener() {
 				//callback function runs on threadpool by ActiveMQ
 				public void onMessage(Message message) {
+//					message.getJMSMessageID();
+//					message.getJMSDeliveryMode();
+//					message.getJMSPriority()
+					
 					TextMessage textMessage = (TextMessage) message;
+					
 					String text;
 					try {
 						text = textMessage.getText();
