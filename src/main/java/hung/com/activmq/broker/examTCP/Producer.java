@@ -36,10 +36,14 @@ public class Producer implements Runnable {
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:1000");
             connectionFactory.setUserName("admin");
             connectionFactory.setPassword("admin");
+//            connectionFactory.setConnectResponseTimeout(connectResponseTimeout);
+//            connectionFactory.setSendTimeout(sendTimeout);
+            
             // Create a Connection
             Connection connection = connectionFactory.createConnection();
             //synchronous (blocking) here until Consumer create connection
             connection.start();
+            
 
             // Create a Session
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -48,7 +52,7 @@ public class Producer implements Runnable {
 			//Queue này ở Producer để send Message tới Broker (ko phải ở broker).
          // Create the destination (Topic or Queue)
             Destination destination = session.createQueue("TEST.FOO");
-//			session.createTopic(topicName)
+//			Destination destination = session.createTopic(topicName)
             
             //========================================================================end
             // Create a MessageProducer from the Session to the Topic or Queue
@@ -68,6 +72,7 @@ public class Producer implements Runnable {
             // Tell the producer to send the message
             System.out.println("<= Sent message: "+ message.hashCode() + " : " + Thread.currentThread().getName());
             producer.send(message);
+            
             System.out.println("<= finished sending : " + Thread.currentThread().getName());
             
             //test: repeat send message
