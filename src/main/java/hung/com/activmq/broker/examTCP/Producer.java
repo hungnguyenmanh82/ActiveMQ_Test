@@ -33,6 +33,7 @@ public class Producer implements Runnable {
         	// User/pass ko có ở thiết lập Broker server
         	// bản chất nó là ID để đăng ký nhận message từ Consumer(Subscriber)
         	// Consumer và Producer phải chung user/pass thì mới gửi nhận message cho nhau đc.
+        	// http://activemq.apache.org/async-sends.html
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:1000");
             connectionFactory.setUserName("admin");
             connectionFactory.setPassword("admin");
