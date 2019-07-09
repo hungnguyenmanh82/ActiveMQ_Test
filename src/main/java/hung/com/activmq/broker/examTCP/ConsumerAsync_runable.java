@@ -20,7 +20,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * 
  * @Runnable:  dùng để chạy function này trên worker thread thôi
  */
-public class ConsumerAsync implements Runnable, ExceptionListener {
+public class ConsumerAsync_runable implements Runnable, ExceptionListener {
 
 	private static String url = ActiveMQConnection.DEFAULT_BROKER_URL;
 	public void run() {

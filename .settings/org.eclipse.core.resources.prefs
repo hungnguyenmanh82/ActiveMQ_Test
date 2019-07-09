@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//src/main/java/hung/com/activmq/broker/examTCP/App.java=UTF-8
-encoding//src/main/java/hung/com/activmq/broker/examTCP/ConsumerAsync.java=UTF-8
-encoding//src/main/java/hung/com/activmq/broker/examTCP/Producer.java=UTF-8
+encoding//src/main/java/hung/com/activmq/broker/examTCP/App1_Brocker.java=UTF-8
+encoding//src/main/java/hung/com/activmq/broker/examTCP/ConsumerAsync_runable.java=UTF-8
+encoding//src/main/java/hung/com/activmq/broker/examTCP/Producer_runable.java=UTF-8
 encoding//src/main/java/hung/com/activmq/broker/examVM/App.java=UTF-8
 encoding//src/main/java/hung/com/activmq/broker/examVM/ConsumerSynchronous.java=UTF-8
 encoding//src/main/java/hung/com/activmq/broker/examVM/Producer.java=UTF-8

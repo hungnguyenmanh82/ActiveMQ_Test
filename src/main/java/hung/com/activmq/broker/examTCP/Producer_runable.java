@@ -16,7 +16,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  * 
  * @Runnable:  dùng để chạy function này trên worker thread thôi
  */
-public class Producer implements Runnable {
+public class Producer_runable implements Runnable {
     public void run() {
         try {
             //================================  ==========
@@ -50,7 +50,8 @@ public class Producer implements Runnable {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             //QueueName giống như ID để giao tiếp giữa Consumer và Producer thì phải.
-			//Queue này ở Producer để send Message tới Broker (ko phải ở broker).
+			//Queue này để đảm bảo message đúng thứ tự khi gửi đi trong queue và nhận về tuần tự ở Queue
+            // nghĩa là phải tạo buffer riêng cho queue.
          // Create the destination (Topic or Queue)
             Destination destination = session.createQueue("TEST.FOO");
 //			Destination destination = session.createTopic(topicName)
